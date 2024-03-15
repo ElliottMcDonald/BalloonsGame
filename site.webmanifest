@@ -1,6 +1,6 @@
 {
-  "short_name": "",
-  "name": "",
+  "short_name": "Balloons",
+  "name": "Balloons Game",
   "icons": [{
     "src": "icon.png",
     "type": "image/png",
