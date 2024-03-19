@@ -1,12 +1,13 @@
 {
-  "short_name": "Balloons",
-  "name": "Balloons Game",
+  "lang": "en",
+  "short_name": "Fish Catcher",
+  "name": "Fish Catcher Game",
   "icons": [{
     "src": "icon.png",
     "type": "image/png",
-    "sizes": "192x192"
+    "sizes": "320x320"
   }],
-  "start_url": "/?utm_source=homescreen",
+  "start_url": "https://github.com/ElliottMcDonald/FishCatcherGame",
   "background_color": "#fafafa",
   "theme_color": "#fafafa"
 }
