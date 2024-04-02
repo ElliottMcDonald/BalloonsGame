@@ -12,6 +12,26 @@ const jsFish = document.getElementById("js-fish");
 
 let userReady = false;
 
+let fishArray = [];
+
+/* ============================= */
+/* Spawn the Fish ============== */
+/* ============================= */
+
+let spawnFish = () => {
+  let fish = document.createElement("div");
+  fish.classList.add("fish", "js-Fish");
+  fish.style.backgroundColor = "yellow";
+  fish.style.position = "absolute";
+  fish.style.left = "0";
+  fishHeight = jsContainer.clientHeight * 0.15;
+  fish.style.top = `${
+    Math.random() * (jsContainer.clientHeight - fishHeight)
+  }px`;
+  jsContainer.appendChild(fish);
+  fishArray.push(fish);
+};
+
 /* ============================= */
 /* Collision Logic ============= */
 /* ============================= */
@@ -36,6 +56,7 @@ function fishSharkCollision(jsFish, jsShark) {
 let gameStart = () => {
   jsWelcomeMessage.style.visibility = "hidden";
   userReady = true;
+  spawnTimer = setInterval(spawnFish, 50);
 };
 
 jsStartButton.addEventListener("click", gameStart);
