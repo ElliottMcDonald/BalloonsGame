@@ -8,16 +8,41 @@ const jsContainer = document.getElementById("js-container");
 
 const jsShark = document.getElementById("js-shark");
 
+const jsFish = document.getElementById("js-fish");
+
 let userReady = false;
+
+/* ============================= */
+/* Collision Logic ============= */
+/* ============================= */
+
+function fishSharkCollision(jsFish, jsShark) {
+  if (
+    jsFish.x + jsFish.width >= jsShark.x &&
+    jsFish.x <= jsShark.x + jsShark.width &&
+    jsFish.y + jsFish.height >= jsShark.y &&
+    jsFish.y <= jsShark.y + jsShark.height
+  )
+    return true;
+  else {
+    return false;
+  }
+}
+
+/* ============================= */
+/* Start Game ================== */
+/* ============================= */
 
 let gameStart = () => {
   jsWelcomeMessage.style.visibility = "hidden";
   userReady = true;
 };
 
-jsStartButton.addEventListener("click", () => {
-  gameStart();
-});
+jsStartButton.addEventListener("click", gameStart);
+
+/* ============================= */
+/* Move Shark Up and Down ====== */
+/* ============================= */
 
 let moveShark = function (event) {
   event.preventDefault();
@@ -46,16 +71,3 @@ window.addEventListener("keydown", (event) => {
     moveShark(event);
   }
 });
-
-function fishSharkCollision(jsFish, jsShark) {
-  if (
-    jsFish.x + jsFish.width >= jsShark.x &&
-    jsFish.x <= jsShark.x + jsShark.width &&
-    jsFish.y + jsFish.height >= jsShark.y &&
-    jsFish.y <= jsShark.y + jsShark.height
-  )
-    return true;
-  else {
-    return false;
-  }
-}
