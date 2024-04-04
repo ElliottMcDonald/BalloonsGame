@@ -33,6 +33,36 @@ let spawnFish = () => {
 };
 
 /* ============================= */
+/* Move Fish =================== */
+/* ============================= */
+
+let moveFish = () => {
+  fishArray.forEach((fish) => {
+    let fishLeftPosition = parseInt(fish.style.left, 10);
+    let leftMovementRange = jsContainer.clientWidth / 25;
+    fish.style.left = `${
+      fishLeftPosition + Math.random() * leftMovementRange
+    }px`;
+
+    let fishHeight = parseInt(fish.offsetHeight, 10);
+
+    let fishTopPosition = parseInt(fish.style.top, 10);
+    let topMovementRange =
+      ((Math.random() - 0.5) * jsContainer.clientHeight) / 15;
+    let newTopPosition = fishTopPosition + topMovementRange;
+
+    if (newTopPosition > jsContainer.clientHeight - fishHeight) {
+      newTopPosition = jsContainer.clientHeight - fishHeight;
+    }
+    if (newTopPosition < 0) {
+      newTopPosition = 0;
+    }
+
+    fish.style.top = `${newTopPosition}px`;
+  });
+};
+
+/* ============================= */
 /* Collision Logic ============= */
 /* ============================= */
 
@@ -56,7 +86,8 @@ function fishSharkCollision(jsFish, jsShark) {
 let gameStart = () => {
   jsWelcomeMessage.style.visibility = "hidden";
   userReady = true;
-  spawnTimer = setInterval(spawnFish, 50);
+  spawnTimer = setInterval(spawnFish, 500);
+  movementTimer = setInterval(moveFish, 250);
 };
 
 jsStartButton.addEventListener("click", gameStart);
