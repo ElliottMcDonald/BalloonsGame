@@ -59,6 +59,11 @@ let moveFish = () => {
     }
 
     fish.style.top = `${newTopPosition}px`;
+
+    if (fishSharkCollision(fish, jsShark) === true) {
+      // console.log("1");
+      // fishArray.splice(index, 1);
+    }
   });
 };
 
@@ -66,12 +71,22 @@ let moveFish = () => {
 /* Collision Logic ============= */
 /* ============================= */
 
-function fishSharkCollision(jsFish, jsShark) {
+function fishSharkCollision(fish, jsShark) {
+  let fishXAxisPostion = parseInt(fish.style.left, 10);
+  let fishYAxisPosition = parseInt(fish.style.top, 10);
+  let fishWidth = fish.offsetWidth;
+  let fishHeight = fish.offsetHeight;
+
+  let jsSharkXAxisPosition = parseInt(jsShark.style.left, 10);
+  let jsSharkYAxisPosition = parseInt(jsShark.style.top, 10);
+  let jsSharkWidth = jsShark.offsetWidth;
+  let jsSharkHeight = jsShark.offsetHeight;
+
   if (
-    jsFish.x + jsFish.width >= jsShark.x &&
-    jsFish.x <= jsShark.x + jsShark.width &&
-    jsFish.y + jsFish.height >= jsShark.y &&
-    jsFish.y <= jsShark.y + jsShark.height
+    fishXAxisPostion + fishWidth > jsSharkXAxisPosition &&
+    fishXAxisPostion < jsSharkXAxisPosition + jsSharkWidth &&
+    fishYAxisPosition + fishHeight > jsSharkHeight &&
+    fishYAxisPosition < jsSharkYAxisPosition + jsSharkHeight
   )
     return true;
   else {
