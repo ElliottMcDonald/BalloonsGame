@@ -37,7 +37,8 @@ let spawnFish = () => {
 /* ============================= */
 
 let moveFish = () => {
-  fishArray.forEach((fish) => {
+  for (let i = fishArray.length - 1; i >= 0; i--) {
+    let fish = fishArray[i];
     let fishLeftPosition = parseInt(fish.style.left, 10);
     let leftMovementRange = jsContainer.clientWidth / 25;
     fish.style.left = `${
@@ -61,10 +62,15 @@ let moveFish = () => {
     fish.style.top = `${newTopPosition}px`;
 
     if (fishSharkCollision(fish, jsShark) === true) {
-      // console.log("1");
-      // fishArray.splice(index, 1);
+      console.log("Collision at index ", i);
+      jsContainer.removeChild(fish);
+      fishArray.splice(i, 1);
+    } else if (fishLeftPosition >= jsContainer.clientWidth) {
+      console.log("Fish off screen at index ", i);
+      jsContainer.removeChild(fish);
+      fishArray.splice(i, 1);
     }
-  });
+  }
 };
 
 /* ============================= */
@@ -72,7 +78,7 @@ let moveFish = () => {
 /* ============================= */
 
 function fishSharkCollision(fish, jsShark) {
-  let fishXAxisPostion = parseInt(fish.style.left, 10);
+  let fishXAxisPosition = parseInt(fish.style.left, 10);
   let fishYAxisPosition = parseInt(fish.style.top, 10);
   let fishWidth = fish.offsetWidth;
   let fishHeight = fish.offsetHeight;
@@ -83,9 +89,9 @@ function fishSharkCollision(fish, jsShark) {
   let jsSharkHeight = jsShark.offsetHeight;
 
   if (
-    fishXAxisPostion + fishWidth > jsSharkXAxisPosition &&
-    fishXAxisPostion < jsSharkXAxisPosition + jsSharkWidth &&
-    fishYAxisPosition + fishHeight > jsSharkHeight &&
+    fishXAxisPosition + fishWidth > jsSharkXAxisPosition &&
+    fishXAxisPosition < jsSharkXAxisPosition + jsSharkWidth &&
+    fishYAxisPosition + fishHeight > jsSharkYAxisPosition &&
     fishYAxisPosition < jsSharkYAxisPosition + jsSharkHeight
   )
     return true;
@@ -116,7 +122,7 @@ let moveShark = function (event) {
 
   let step = 15;
 
-  let currentPosition = parseInt(jsShark.style.top) || 0;
+  let currentPosition = parseInt(jsShark.style.top, 10) || 0;
 
   switch (event.key) {
     case "ArrowUp":
