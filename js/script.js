@@ -8,8 +8,6 @@ const jsContainer = document.getElementById("js-container");
 
 const jsShark = document.getElementById("js-shark");
 
-const jsFish = document.getElementById("js-fish");
-
 let userReady = false;
 
 let fishArray = [];
@@ -20,7 +18,7 @@ let fishArray = [];
 
 let spawnFish = () => {
   let fish = document.createElement("div");
-  fish.classList.add("fish", "js-Fish");
+  fish.classList.add("fish");
   fish.style.backgroundColor = "yellow";
   fish.style.position = "absolute";
   fish.style.left = "0";
@@ -78,24 +76,17 @@ let moveFish = () => {
 /* ============================= */
 
 function fishSharkCollision(fish, jsShark) {
-  let fishXAxisPosition = parseInt(fish.style.left, 10);
-  let fishYAxisPosition = parseInt(fish.style.top, 10);
-  let fishWidth = fish.offsetWidth;
-  let fishHeight = fish.offsetHeight;
-
-  let jsSharkXAxisPosition = parseInt(jsShark.style.left, 10);
-  let jsSharkYAxisPosition = parseInt(jsShark.style.top, 10);
-  let jsSharkWidth = jsShark.offsetWidth;
-  let jsSharkHeight = jsShark.offsetHeight;
+  let fishBCRect = fish.getBoundingClientRect();
+  let jsSharkBCRect = jsShark.getBoundingClientRect();
 
   if (
-    fishXAxisPosition + fishWidth > jsSharkXAxisPosition &&
-    fishXAxisPosition < jsSharkXAxisPosition + jsSharkWidth &&
-    fishYAxisPosition + fishHeight > jsSharkYAxisPosition &&
-    fishYAxisPosition < jsSharkYAxisPosition + jsSharkHeight
-  )
+    fishBCRect.x + fishBCRect.width > jsSharkBCRect.x &&
+    fishBCRect.x < jsSharkBCRect.x + jsSharkBCRect.width &&
+    fishBCRect.y + fishBCRect.height > jsSharkBCRect.y &&
+    fishBCRect.y < jsSharkBCRect.y + jsSharkBCRect.height
+  ) {
     return true;
-  else {
+  } else {
     return false;
   }
 }
