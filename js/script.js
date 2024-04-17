@@ -95,11 +95,23 @@ function fishSharkCollision(fish, jsShark) {
 /* Start Game ================== */
 /* ============================= */
 
+let counter = 0;
+
+function countdown() {
+  counter++;
+  console.log(counter);
+  if (counter >= 5) {
+    clearInterval(spawnTimer);
+    clearInterval(movementTimer);
+  }
+}
+
 let gameStart = () => {
   jsWelcomeMessage.style.visibility = "hidden";
   userReady = true;
   spawnTimer = setInterval(spawnFish, 500);
   movementTimer = setInterval(moveFish, 250);
+  countdownTimer = setInterval(countdown, 1000);
 };
 
 jsStartButton.addEventListener("click", gameStart);
