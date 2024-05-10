@@ -34,7 +34,35 @@
     </hgroup>
   </div>
   <div id="js-game-over-message" class="game-over-message">
-    <p>Game Over</p>
+    <hgroup>
+    <h1>Game Over</h1>
+    <p class="result">You scored:</p>
+    <p id="js-result-number" class="result"></p>
+    <button id="js-restart-button" class="start-button">Play Again!</button>
+    </hgroup>
+    <form action="">
+      <label for="player-name">Add your name to the highscores</label>
+      <input 
+      type="text"
+      id="player-name"
+      name="player-name"
+      placeholder="Enter your name"
+      minlength="3"
+      maxlength="15"
+      pattern="[a-zA-Z0-9]+"
+      required
+      >
+      <label for="playerScore"></label>
+      <input 
+      type="number"
+      class="player-score"
+      id="js-player-score"
+      name="player-score"
+      readonly
+      required
+      >
+      <button type="submit">Submit</button>
+    </form>
   </div>
   <div id="js-shark" class="shark"></div>
 </div>

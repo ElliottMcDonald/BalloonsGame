@@ -113,7 +113,11 @@ function gameStart() {
   countdownTimer = setInterval(countdown, 1000);
 }
 
-jsStartButton.addEventListener("click", gameStart);
+const jsStartButtons = document.querySelectorAll(".start-button");
+
+jsStartButtons.forEach(function (button) {
+  button.addEventListener("click", gameStart);
+});
 
 /* ============================= */
 /* Stop Game =================== */
@@ -124,17 +128,32 @@ let counter = 0;
 function countdown() {
   counter++;
   console.log(counter);
-  if (counter >= 25) {
+  if (counter >= 1) {
     stopGame();
   }
 }
 
+const jsResultNumber = document.getElementById("js-result-number");
+
+const jsPlayerScore = document.getElementById("js-player-score");
+
 function stopGame() {
+  userReady = false;
+  //moveShark function cannot be moved anymore. Shark
+  //object cannot be moved by player. preventDefault() also disabled so
+  //text input field in gameOverScreen takes keydown inputs.
   clearInterval(spawnTimer);
   clearInterval(movementTimer);
   clearInterval(countdownTimer);
   jsScoreCounter.style.display = "none";
+  gameOverScreen();
+}
+
+function gameOverScreen() {
   jsGameOverMessage.style.display = "block";
+  jsResultNumber.innerHTML = `${score}`;
+  jsResultNumber.style.fontSize = "1.5rem";
+  jsPlayerScore.value = `${score}`;
 }
 
 /* ============================= */
