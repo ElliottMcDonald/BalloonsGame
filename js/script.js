@@ -4,9 +4,13 @@ const jsStartButton = document.getElementById("js-start-button");
 
 const jsWelcomeMessage = document.getElementById("js-welcome-message");
 
+const jsScoreCounter = document.getElementById("js-score-counter");
+
 const jsContainer = document.getElementById("js-container");
 
 const jsShark = document.getElementById("js-shark");
+
+const jsGameOverMessage = document.getElementById("js-game-over-message");
 
 let userReady = false;
 
@@ -16,7 +20,7 @@ let fishArray = [];
 /* Spawn the Fish ============== */
 /* ============================= */
 
-let spawnFish = () => {
+function spawnFish() {
   let fish = document.createElement("div");
   fish.classList.add("fish");
   fish.style.backgroundColor = "yellow";
@@ -28,13 +32,13 @@ let spawnFish = () => {
   }px`;
   jsContainer.appendChild(fish);
   fishArray.push(fish);
-};
+}
 
 /* ============================= */
 /* Move Fish =================== */
 /* ============================= */
 
-let moveFish = () => {
+function moveFish() {
   for (let i = fishArray.length - 1; i >= 0; i--) {
     let fish = fishArray[i];
     let fishLeftPosition = parseInt(fish.style.left, 10);
@@ -59,7 +63,7 @@ let moveFish = () => {
 
     fish.style.top = `${newTopPosition}px`;
 
-    if (fishSharkCollision(fish, jsShark) === true) {
+    if (fishSharkCollision(fish, jsShark)) {
       console.log("Collision at index ", i);
       jsContainer.removeChild(fish);
       fishArray.splice(i, 1);
@@ -69,11 +73,13 @@ let moveFish = () => {
       fishArray.splice(i, 1);
     }
   }
-};
+}
 
 /* ============================= */
 /* Collision Logic ============= */
 /* ============================= */
+
+let score = 0;
 
 function fishSharkCollision(fish, jsShark) {
   let fishBCRect = fish.getBoundingClientRect();
@@ -85,6 +91,9 @@ function fishSharkCollision(fish, jsShark) {
     fishBCRect.y + fishBCRect.height > jsSharkBCRect.y &&
     fishBCRect.y < jsSharkBCRect.y + jsSharkBCRect.height
   ) {
+    score++;
+    console.log(score);
+    jsScoreCounter.innerHTML = `Score: ${score}`;
     return true;
   } else {
     return false;
@@ -95,32 +104,44 @@ function fishSharkCollision(fish, jsShark) {
 /* Start Game ================== */
 /* ============================= */
 
+function gameStart() {
+  jsWelcomeMessage.style.display = "none";
+  jsScoreCounter.style.display = "block";
+  userReady = true;
+  spawnTimer = setInterval(spawnFish, 1000);
+  movementTimer = setInterval(moveFish, 250);
+  countdownTimer = setInterval(countdown, 1000);
+}
+
+jsStartButton.addEventListener("click", gameStart);
+
+/* ============================= */
+/* Stop Game =================== */
+/* ============================= */
+
 let counter = 0;
 
 function countdown() {
   counter++;
   console.log(counter);
-  if (counter >= 5) {
-    clearInterval(spawnTimer);
-    clearInterval(movementTimer);
+  if (counter >= 25) {
+    stopGame();
   }
 }
 
-let gameStart = () => {
-  jsWelcomeMessage.style.visibility = "hidden";
-  userReady = true;
-  spawnTimer = setInterval(spawnFish, 500);
-  movementTimer = setInterval(moveFish, 250);
-  countdownTimer = setInterval(countdown, 1000);
-};
-
-jsStartButton.addEventListener("click", gameStart);
+function stopGame() {
+  clearInterval(spawnTimer);
+  clearInterval(movementTimer);
+  clearInterval(countdownTimer);
+  jsScoreCounter.style.display = "none";
+  jsGameOverMessage.style.display = "block";
+}
 
 /* ============================= */
 /* Move Shark Up and Down ====== */
 /* ============================= */
 
-let moveShark = function (event) {
+function moveShark(event) {
   event.preventDefault();
 
   let step = 15;
@@ -140,7 +161,7 @@ let moveShark = function (event) {
   }
 
   jsShark.style.top = currentPosition + "px";
-};
+}
 
 window.addEventListener("keydown", (event) => {
   if (userReady === true) {
