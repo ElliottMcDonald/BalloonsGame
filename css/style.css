@@ -241,3 +241,13 @@ h1 {
    display: none;
    position: absolute;
 }
+
+.loading-box {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.loading {
+   width: 50%;
+}

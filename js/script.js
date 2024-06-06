@@ -114,7 +114,7 @@ function gameStart() {
   userReady = true;
   spawnTimer = setInterval(spawnFish, 1000);
   movementTimer = setInterval(moveFish, 250);
-  countdownTimer = setInterval(countdown, 1000);
+  countdownTimer = setInterval(countdown, 100);
 }
 
 function resetGame() {
@@ -169,6 +169,20 @@ function gameOverScreen() {
   jsResultNumber.style.fontSize = "1.5rem";
   jsPlayerScore.value = `${score}`;
 }
+
+const scoreForm = document.getElementById("score-form");
+
+scoreForm.addEventListener("submit", function (e) {
+  e.preventDefault();
+  scoreForm.innerHTML = `<div class="loading-box">
+  <img src="img/loading.svg" class="loading" alt="loading">
+  <p>Submitting your score</p>
+  </div>`;
+
+  setTimeout(function () {
+    scoreForm.innerHTML = `<p>Score submitted</p>`;
+  }, 2000);
+});
 
 /* ============================= */
 /* Move Shark Up and Down ====== */
