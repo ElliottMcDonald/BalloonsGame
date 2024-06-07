@@ -170,17 +170,18 @@ function gameOverScreen() {
   jsPlayerScore.value = `${score}`;
 }
 
-const scoreForm = document.getElementById("score-form");
+const scoreForm = document.getElementById("scoreform");
 
 scoreForm.addEventListener("submit", function (e) {
   e.preventDefault();
+  const scoreFormData = new FormData(scoreform);
+  const playerName = scoreFormData.get("playername");
   scoreForm.innerHTML = `<div class="loading-box">
   <img src="img/loading.svg" class="loading" alt="loading">
   <p>Submitting your score</p>
   </div>`;
-
   setTimeout(function () {
-    scoreForm.innerHTML = `<p>Score submitted</p>`;
+    scoreForm.innerHTML = `<p>Thanks for playing ${playerName}. Score submitted!</p>`;
   }, 2000);
 });
 
